@@ -1,6 +1,6 @@
 <template>
   <div id="AppLecturerEntityEditor">
-    <h1></h1>
+    <form id="FormLecturerUGC"></form>
   </div>
 </template>
 
@@ -13,10 +13,22 @@ export default {
     ...mapGetters(["ugcId", "apiLink", "backLink"]),
   },
   methods: {
-    ...mapActions(["fetchInstitutesFromAPI"]),
+    ...mapActions([
+      "fetchInstitutesFromAPI",
+      "fetchIFacultiesFromAPI",
+      "fetchChairsFromAPI",
+      "fetchDegreesFromAPI",
+      "fetchPositionsFromAPI",
+      "fetchStatesFromAPI",
+    ]),
   },
   async mounted() {
     await this.fetchInstitutesFromAPI(this.apiLink);
+    await this.fetchIFacultiesFromAPI(this.apiLink);
+    await this.fetchChairsFromAPI(this.apiLink);
+    await this.fetchDegreesFromAPI(this.apiLink);
+    await this.fetchPositionsFromAPI(this.apiLink);
+    await this.fetchStatesFromAPI(this.apiLink);
   },
 };
 </script>

@@ -17,7 +17,7 @@ export default {
   },
   actions: {
     async fetchInstitutesFromAPI({ commit }, apiLink) {
-      const response = await fetch(`${apiLink}?institutes=all`);
+      const response = await fetch(`${apiLink}?institute=all`);
       const institutes = await response.json();
       commit('updateInstitutes', institutes);
     },
