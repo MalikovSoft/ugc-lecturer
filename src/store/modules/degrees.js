@@ -17,7 +17,7 @@ export default {
   },
   actions: {
     async fetchDegreesFromAPI({ commit }, apiLink) {
-      const response = await fetch(`${apiLink}?degree=all`);
+      const response = await fetch(`${apiLink}?academicDegree=all`);
       const degrees = await response.json();
       commit('updateDegrees', degrees);
     },

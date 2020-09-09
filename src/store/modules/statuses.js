@@ -16,8 +16,8 @@ export default {
     },
   },
   actions: {
-    async fetchStatesFromAPI({ commit }, apiLink) {
-      const response = await fetch(`${apiLink}?status=all`);
+    async fetchStatusesFromAPI({ commit }, apiLink) {
+      const response = await fetch(`${apiLink}?academicStatus=all`);
       const statuses = await response.json();
       commit('updateStatuses', statuses);
     },

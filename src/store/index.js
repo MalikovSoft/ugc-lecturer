@@ -7,6 +7,7 @@ import DictChairs from '@/store/modules/chairs';
 import DictPositions from '@/store/modules/positions';
 import DictDegrees from '@/store/modules/degrees';
 import DictStatuses from '@/store/modules/statuses';
+import FormData from '../store/modules/formData';
 
 Vue.use(Vuex);
 
@@ -19,5 +20,6 @@ export default new Vuex.Store({
     DictPositions,
     DictDegrees,
     DictStatuses,
+    FormData,
   },
 });

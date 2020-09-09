@@ -3,6 +3,8 @@ export default {
     ugcId: '',
     apiLink: '',
     backLink: '',
+    session: null,
+    content: null,
   },
   getters: {
     ugcId: (state) => {
@@ -13,6 +15,12 @@ export default {
     },
     backLink: (state) => {
       return state.backLink;
+    },
+    session: (state) => {
+      return state.session;
+    },
+    content: (state) => {
+      return state.content;
     },
   },
   mutations: {
@@ -25,6 +33,15 @@ export default {
     updateBackLink(state, value) {
       state.backLink = value;
     },
+    updateSession(state, value) {
+      state.session = value;
+    },
+    updateContent(state, value) {
+      state.content = value;
+    },
+    destroySession(state) {
+      state.session.destroy();
+    },
   },
   actions: {
     async setUGCId({ commit }, value) {
@@ -35,6 +52,15 @@ export default {
     },
     async setBackLink({ commit }, value) {
       commit('updateBackLink', value);
+    },
+    async setSession({ commit }, value) {
+      commit('updateSession', value);
+    },
+    async setContent({ commit }, value) {
+      commit('updateContent', value);
+    },
+    async destroySession({ commit }) {
+      commit('destroySession');
     },
   },
 };
