@@ -1,5 +1,4 @@
 import _ from 'lodash';
-import { get } from 'core-js/fn/dict';
 
 export default {
   state: {
@@ -41,8 +40,11 @@ export default {
     jobPlaces: (state) => {
       return state.jobPlaces;
     },
+    jobPlace: (state) => (index) => {
+      return state.jobPlaces[index];
+    },
     email: (state) => {
-      return state.jobPlaces;
+      return state.email;
     },
     eduLevel: (state) => {
       return state.eduLevel;
@@ -100,6 +102,9 @@ export default {
     addJobPlace(state, jobPlace) {
       state.jobPlaces.push(jobPlace);
     },
+    updateJobPlaceByIndex(state, value, index) {
+      state.jobPlaces[index] = value;
+    },
     updateEmail(state, email) {
       state.email = email;
     },
@@ -145,7 +150,7 @@ export default {
       commit('updateAcademicStatus', _.get(content, 'AcademicStatusID[1]', getters.statuses[0]));
       commit('updatePosition', _.get(content, 'PositionID[1]', getters.positions[0]));
       commit('updateJobPlaces', _.get(content, 'JobPlacesIDs[1]', new Array()));
-      commit('updateEmail', _.get(content, 'Email[1]', new String()));
+      commit('updateEmail', _.get(content, 'Email[1]', new String('')));
       commit('updateEduLevel', _.get(content, 'EduLevel[1]', new String()));
       commit(
         'updateTotalWorkExperience',
@@ -158,7 +163,7 @@ export default {
       commit('updateQualification', _.get(content, 'Qualification[1]', new String()));
       commit(
         'updateNameOfTrainingDirectionAndSpecialty',
-        content['NameOfTrainingDirectionAndSpecialty[1]'],
+        _.get(content, 'NameOfTrainingDirectionAndSpecialty[1]', new String()),
       );
       commit('updateGeneralInformation', _.get(content, 'GeneralInformation[1]', new String()));
       commit(
@@ -190,6 +195,68 @@ export default {
     },
     setPosition({ commit }, value) {
       commit('updatePosition', value);
+    },
+    setEmail({ commit }, payload) {
+      commit('updateEmail', payload.value);
+    },
+    setEduLevel({ commit }, payload) {
+      commit('updateEduLevel', payload.value);
+    },
+    setTotalWorkExperience({ commit }, payload) {
+      commit('updateTotalWorkExperience', payload);
+    },
+    setWorkExperienceOfTeacherInSpecialty({ commit }, payload) {
+      commit('updateWorkExperienceOfTeacherInSpecialty', payload);
+    },
+    setQualification({ commit }, payload) {
+      commit('updateQualification', payload);
+    },
+    setNameOfTrainingDirectionAndSpecialty({ commit }, payload) {
+      commit('updateNameOfTrainingDirectionAndSpecialty', payload);
+    },
+    setGeneralInformation({ commit }, payload) {
+      commit('updateGeneralInformation', payload);
+    },
+    setProfessionalDevelopmentAndRetraining({ commit }, payload) {
+      commit('updateProfessionalDevelopmentAndRetraining', payload);
+    },
+    setListOfDisciplinesTaught({ commit }, payload) {
+      commit('updateListOfDisciplinesTaught', payload);
+    },
+    setScientificInterests({ commit }, payload) {
+      commit('updateScientificInterests', payload);
+    },
+    setListOfSignificantPublications({ commit }, payload) {
+      commit('updateListOfSignificantPublications', payload);
+    },
+    setPublicationActivity({ commit }, payload) {
+      commit('updatePublicationActivity', payload);
+    },
+    addJob({ commit, getters }) {
+      let job = {};
+      job.institute = getters.institutes[0];
+      job.faculty = getters.facultiesByInstitute(job.institute)[0];
+      job.chair = getters.chairsByFaculty(job.faculty)[0];
+      commit('addJobPlace', job);
+    },
+    updateJobInstitute({ commit, getters }, payload) {
+      console.log(payload.value, payload.index);
+      let jobPlace = getters.jobPlace(payload.index);
+      jobPlace.institute = payload.value;
+      jobPlace.faculty = _.first(getters.facultiesByInstitute(jobPlace.institute));
+      jobPlace.chair = _.first(getters.chairsByFaculty(jobPlace.faculty));
+      commit('updateJobPlaceByIndex', jobPlace, payload.index);
+    },
+    updateJobFaculty({ commit, getters }, payload) {
+      let jobPlace = getters.jobPlace(payload.index);
+      jobPlace.faculty = payload.value;
+      jobPlace.chair = _.first(getters.chairsByFaculty(jobPlace.faculty));
+      commit('updateJobPlaceByIndex', jobPlace, payload.index);
+    },
+    updateJobChair({ commit, getters }, payload) {
+      let jobPlace = getters.jobPlace(payload.index);
+      jobPlace.chair = payload.value;
+      commit('updateJobPlaceByIndex', jobPlace, payload.index);
     },
   },
 };

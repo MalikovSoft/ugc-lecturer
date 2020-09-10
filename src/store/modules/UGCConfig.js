@@ -62,5 +62,11 @@ export default {
     async destroySession({ commit }) {
       commit('destroySession');
     },
+    saveContent({ commit, getters }) {
+      console.log(getters.content);
+    },
+    cancel({ commit, getters }) {
+      console.log(getters.session);
+    },
   },
 };
